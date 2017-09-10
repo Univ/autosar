@@ -31,6 +31,8 @@ class SenderReceiverInterface(PortInterface):
                for i,elem in enumerate(self.modeGroups):
                   if elem != other.modeGroups[i]: return False
             return True
+            for i,elem in enumerate(self.dataElements):
+               if elem != other.dataElements[i]: return False
       return False
    
    def __ne__(self, other):
@@ -175,6 +177,7 @@ class ClientServerInterface(PortInterface):
 
 
 class DataElement(Element):
+   def tag(self,version=None): return "DATA-ELEMENT-PROTOTYPE"
    def __init__(self,name, typeRef, isQueued=False, softwareAddressMethodRef=None, parent=None, adminData=None):
       super().__init__(name,parent,adminData)
       if isinstance(typeRef,str):
@@ -189,7 +192,11 @@ class DataElement(Element):
       self.swAddrMethodRefList=[]
       if softwareAddressMethodRef is not None:
          self.swAddrMethodRefList.append(str(softwareAddressMethodRef))
-   def tag(self,version=None): return "DATA-ELEMENT-PROTOTYPE"
+   
+   def __eq__(self, other):
+      if isinstance(other, self.__class__):
+         if self.name == other.name and self.adminData == other.adminData and self.typeRef == other.typeRef: return True
+      return False
       
    def asdict(self):
       data = {'type': self.__class__.__name__, 'name': self.name, 'isQueued': self.isQueued, 'typeRef': self.typeRef}
