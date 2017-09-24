@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ElementTree
 import re
 
+
+
 class AdminData(object):
    def __init__(self):
       self.specialDataGroups = []
@@ -125,9 +127,17 @@ def createAdminData(data):
       adminData.specialDataGroups.append(SpecialDataGroup(SDG_GID,SD,SD_GID))
    return adminData
       
-# class ChildElement:
-#    def rootWS(self):
-#       if self.parent is None:
-#          return None
-#       else:
-#          return self.parent.rootWS()
+class InvalidPortInterfaceRef(ValueError):
+   pass
+
+class InvalidDataTypeRef(ValueError):
+   pass
+
+class InvalidDataElementRef(ValueError):
+   pass
+
+class InvalidPortRef(ValueError):
+   pass
+
+class InvalidInitValueRef(ValueError):
+   pass
